@@ -1,19 +1,50 @@
 {
   "name": "heretic-app",
   "version": "1.0.0",
-  "description": "Electron app for Heretic LLM",
+  "description": "Desktop app for Heretic LLM — automatic censorship removal",
   "main": "src/main.cjs",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "dev": "concurrently \"npm run renderer:dev\" \"wait-on http://localhost:5173 && electron .\"",
+    "renderer:dev": "npm --prefix renderer run dev",
+    "renderer:build": "npm --prefix renderer run build",
+    "build": "npm run renderer:build && electron-builder",
+    "build:win": "npm run renderer:build && electron-builder --win",
+    "build:mac": "npm run renderer:build && electron-builder --mac",
+    "build:linux": "npm run renderer:build && electron-builder --linux"
   },
   "dependencies": {
-    "isbot": "^5.1.0",
     "@mjackson/node-fetch-server": "^0.6.0",
-    "@react-router/node": "^7.0.0"
+    "@react-router/node": "^7.0.0",
+    "isbot": "^5.1.0"
   },
   "devDependencies": {
+    "concurrently": "^9.0.0",
     "electron": "^33.0.0",
-    "electron-builder": "^25.0.0"
+    "electron-builder": "^25.0.0",
+    "wait-on": "^8.0.0"
+  },
+  "build": {
+    "appId": "org.heretic.app",
+    "productName": "Heretic",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "renderer/build/**/*",
+      "package.json"
+    ],
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "category": "Science"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    }
   }
 }
+
