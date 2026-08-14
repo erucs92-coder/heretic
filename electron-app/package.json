@@ -1,0 +1,19 @@
+{
+  "name": "heretic-app",
+  "version": "1.0.0",
+  "description": "Electron app for Heretic LLM",
+  "main": "src/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "dependencies": {
+    "isbot": "^5.1.0",
+    "@mjackson/node-fetch-server": "^0.6.0",
+    "@react-router/node": "^7.0.0"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  }
+}
